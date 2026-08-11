@@ -13,7 +13,7 @@ model = joblib.load(model_path)
 st.write("This application predicts weekly sales using a trained XGBoost model.")
 
 st.header("Enter input data")
-st.write(list(model.feature_names_in_))
+
 
 store = st.number_input("store" ,min_value = 1 , step =1)
 dept  = st.number_input("dept" , min_value =1, step=1)
