@@ -1,58 +1,76 @@
-# Walmart Sales Forecasting Project
+# Walmart Sales Forecasting using Machine Learning
 
-## About the Project
+## Project Overview
 
-This project is based on Walmart sales data. The main goal of this project is to predict weekly sales using Machine Learning.
+This project is a Machine Learning based Sales Forecasting system developed using the Walmart Store Sales dataset. The main objective is to predict `Weekly_Sales` using historical sales data and related store, holiday, economic, and markdown features.
 
-In this project, I worked with historical sales data and tried different Machine Learning models to find which model gives the best prediction results.
+The project follows a complete Machine Learning workflow:
 
-## Dataset
+**Data Collection → Data Preprocessing → EDA → Feature Engineering → Model Training → Hyperparameter Tuning → Model Comparison → Best Model Selection → Model Saving → Streamlit Application**
 
-I used the Walmart Sales Forecasting dataset.
+## 📊Dataset
 
-The dataset contains:
+The project uses the Walmart Store Sales dataset containing:
 
-- train.csv
-- test.csv
-- features.csv
-- stores.csv
+- Store and Department information
+- Weekly Sales
+- Date and Holiday information
+- Temperature
+- Fuel Price
+- CPI
+- Unemployment
+- Markdown features
+- Store Type and Size
 
-The datasets were merged using Store, Date, and IsHoliday where required.
+The `train.csv`, `features.csv`, and `stores.csv` files were merged and processed before model training.
 
-## Data Preprocessing
+## Data Preprocessing & EDA
 
-Before training the models, I performed the following preprocessing steps:
+The following steps were performed:
 
-- Loaded the required CSV files using Pandas
-- Merged the sales, features, and store datasets
+- Merged the required datasets
 - Handled missing values
-- Converted the Date column into Year, Month, and Day
+- Converted Date into datetime format
+- Extracted Year, Month, and Day
 - Removed the original Date column
-- Applied One-Hot Encoding to categorical columns
-- Split the data into training and testing data
+- Applied One-Hot Encoding to categorical variables
+- Created features (`X`) and target (`y`)
+- Performed Train-Test Split
+- Performed Exploratory Data Analysis
+- Analyzed correlations and sales patterns
 
 ## Models Used
 
-I tried three Machine Learning models:
+Three regression models were trained and compared:
 
-1. Linear Regression
-2. Random Forest Regressor
-3. XGBoost Regressor
+1. **Linear Regression** – Used as the baseline model
+2. **Random Forest Regressor** – Used to capture nonlinear relationships
+3. **XGBoost Regressor** – Tuned and selected as the final model
 
-I compared the models using:
+Hyperparameter tuning was performed for Random Forest and XGBoost using `RandomizedSearchCV`.
 
-- MAE
-- MSE
-- R² Score
+## 📈 Model Results
 
-After comparing the results, XGBoost gave the best performance, so I selected XGBoost as the final model for the application.
+ Linear Regression -> MSE -460,782,215.62 | MAE - 14,377.53 | |R2 socre - 0.1164 |
+Random Forest  -> MSE - 225,985,700.97 | MAE - 9,253.41 |  |R2 score - 0.5666 |
+**XGBoost**  -> **MSE - 58,083,207.55 |MAE - 4,590.57|  | R2 score - 0.8886 |**
+**
 
-## Model Files
 
-The trained models were saved using Joblib.
+###  Best Model : XGBoost
 
-```text
-models/
-├── linear_model.pkl
-├── best_random_forest.pkl
-└── best_xgboost.pkl
+XGBoost achieved the best overall performance with:
+
+- MAE:4,590.57
+- **R² Score**: 0.8886
+
+The model explains approximately **88.86% of the variation in Weekly Sales** on the test dataset. Therefore, XGBoost was selected as the final model.
+
+##  Model Saving
+
+The final trained model was saved as a `.pkl` file using Joblib.
+
+```python
+import joblib
+
+joblib.dump(best_xgb, "best_xgboost.pkl")
