@@ -14,7 +14,6 @@ st.write("This application predicts weekly sales using a trained XGBoost model."
 
 st.header("Enter input data")
 
-
 store = st.number_input("store" ,min_value = 1 , step =1)
 dept  = st.number_input("dept" , min_value =1, step=1)
 temperature = st.number_input("temperature" )
